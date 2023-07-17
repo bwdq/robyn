@@ -1,6 +1,7 @@
 import os
 import webbrowser
 
+from robyn import scaffold
 from .argument_parser import Config
 
 
@@ -15,6 +16,18 @@ def create_robyn_app():
     project_dir = input("Enter the name of the project directory: ")
     docker = input("Need Docker? (Y/N) ")
 
+    db = input(
+        """
+    need a DB/ORM?
+    1. none
+    2. postgres
+    3. mongo
+    4. sqlite
+    5. prisma - sqlite
+    6. sqlalchemy - sqlite
+    """
+    )
+
     # Initailize a new Robyn project
     docker = check(docker, "Docker")
 
@@ -26,22 +39,20 @@ def create_robyn_app():
     # Create the main application file
     app_file_path = os.path.join(project_dir, "app.py")
     with open(app_file_path, "w") as f:
-        f.write(
-            """
-from robyn import Robyn
-
-app = Robyn(__file__)
-
-@app.get("/")
-def index():
-    return "Hello World!"
-
-
-if __name__ == "__main__":
-    app.start()
-
-            """
-        )
+        if db == "1":
+            f.write(scaffold.NO_DB)
+        elif db == "2":
+            f.write(scaffold.POSTGRES)
+        elif db == "3":
+            f.write(scaffold.MONGO)
+        elif db == "4":
+            f.write(scaffold.SQLITE)
+        elif db == "5":
+            f.write(scaffold.PRISMA)
+        elif db == "6":
+            f.write(scaffold.SQLALCHEMY)
+        else:
+            f.write(scaffold.NO_DB)
 
     # Dockerfile configuration
     if docker == "Y":

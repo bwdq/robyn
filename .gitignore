@@ -17,3 +17,8 @@ venv
 robyn.code-workspace
 hello_robyn.py
 robyn.env
+
+#Jetbrains IDE
+.idea
+
+robyn/robyn.pyd

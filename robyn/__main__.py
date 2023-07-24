@@ -18,6 +18,18 @@ def create_robyn_app():
     # Initailize a new Robyn project
     docker = check(docker, "Docker")
 
+    db = input(
+        """Use a database example template?
+    1. None
+    2. Postgres
+    3. SQLite
+    4. MongoDB
+    5. SQLAlchemy
+    6. Prisma
+    
+    """
+    )
+
     print(f"Creating a new Robyn project '{project_dir}'...")
 
     # Create a new directory for the project
@@ -25,9 +37,25 @@ def create_robyn_app():
 
     # Create the main application file
     app_file_path = os.path.join(project_dir, "app.py")
-    with open(app_file_path, "w") as f:
-        f.write(
-            """
+    if db == "2":
+        with open(app_file_path, "w") as f:
+            f.write(open("robyn/scaffold/postgres.py", "r").read())
+    elif db == "3":
+        with open(app_file_path, "w") as f:
+            f.write(open("robyn/scaffold/sqlite.py", "r").read())
+    elif db == "4":
+        with open(app_file_path, "w") as f:
+            f.write(open("robyn/scaffold/mongo.py", "r").read())
+    elif db == "5":
+        with open(app_file_path, "w") as f:
+            f.write(open("robyn/scaffold/sqlalchemy.py", "r").read())
+    elif db == "6":
+        with open(app_file_path, "w") as f:
+            f.write(open("robyn/scaffold/prisma.py", "r").read())
+    else:
+        with open(app_file_path, "w") as f:
+            f.write(
+                """
 from robyn import Robyn
 
 app = Robyn(__file__)
@@ -41,7 +69,7 @@ if __name__ == "__main__":
     app.start()
 
             """
-        )
+            )
 
     # Dockerfile configuration
     if docker == "Y":

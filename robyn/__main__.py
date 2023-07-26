@@ -50,8 +50,13 @@ def create_robyn_app():
         with open(app_file_path, "w") as f:
             f.write(open("robyn/scaffold/sqlalchemy.py", "r").read())
     elif db == "6":
+        # copy app.py
         with open(app_file_path, "w") as f:
-            f.write(open("robyn/scaffold/prisma.py", "r").read())
+            f.write(open("robyn/scaffold/prisma.pys", "r").read())
+            # copy prisma schema
+        schema_file_path = os.path.join(project_dir, "schema.prisma")
+        with open(schema_file_path, "w") as f2:
+            f2.write(open("robyn/scaffold/schema.prisma", "r").read())
     else:
         with open(app_file_path, "w") as f:
             f.write(

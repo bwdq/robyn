@@ -25,4 +25,8 @@ async def h():
     )
     return user.json(indent=2)
 
-app.start(port=8080)
+
+app.start()
+
+# initialize prisma with "prisma generate"
+# create sqlite db "dev.db"
